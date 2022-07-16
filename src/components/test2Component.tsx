@@ -1,15 +1,23 @@
 import { FC } from "react";
-import { useStore } from "../model";
+import { observer } from "mobx-react-lite";
 import { IUserStore } from "../model/user.store";
+import { Button } from "@mui/material";
+import { EditUser } from "./user/EditUser";
 
 interface Props {
   user: IUserStore;
 }
 
-const Test2Component: FC<Props> = ({ user }) => {
-  console.log("user", user);
-  return <>test</>;
-};
+const Test2Component: FC<Props> = observer(({ user }) => {
+  const handleDelete = () => user.remove();
+  return (
+    <div>
+      <div>username : {user.getUsername()}</div>
+      <Button onClick={handleDelete}>delete</Button>
+      <EditUser user={user} />
+    </div>
+  );
+});
 
 // export const Test3Component: FC<Props> = ({ name }) => {
 //   const store = useStore();

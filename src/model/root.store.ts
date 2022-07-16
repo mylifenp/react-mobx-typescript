@@ -1,4 +1,4 @@
-import { Instance, types } from "mobx-state-tree";
+import { destroy, detach, Instance, types } from "mobx-state-tree";
 import UserStore, { IUserStore } from "./user.store";
 
 export interface IRootStore extends Instance<typeof RootStore> {}
@@ -10,6 +10,10 @@ const RootStore = types
   .actions((self) => ({
     addUser(user: IUserStore) {
       self.users.put(user);
+    },
+    deleteUser(user: IUserStore) {
+      detach(user);
+      destroy(user);
     },
   }))
   .views((self) => ({
